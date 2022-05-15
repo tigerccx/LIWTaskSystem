@@ -22,6 +22,12 @@
     <Filter Include="Test">
       <UniqueIdentifier>{f601d0ff-2c09-4243-90e5-3230fb32d18e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fiber">
+      <UniqueIdentifier>{28e1258a-d19d-4263-b60d-c20ae8b0783a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\Fiber">
+      <UniqueIdentifier>{9713de8c-4b73-4402-aefb-ec2ded1894ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LIWThreadPool.cpp">
@@ -47,6 +53,18 @@
     </ClCompile>
     <ClCompile Include="Executor.cpp">
       <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="LIWFiberWorker.cpp">
+      <Filter>Fiber</Filter>
+    </ClCompile>
+    <ClCompile Include="LIWFiberThreadPool.cpp">
+      <Filter>Fiber</Filter>
+    </ClCompile>
+    <ClCompile Include="LIWFiberMain.cpp">
+      <Filter>Fiber</Filter>
+    </ClCompile>
+    <ClCompile Include="FiberExecutor.cpp">
+      <Filter>Test\Fiber</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +100,27 @@
     </ClInclude>
     <ClInclude Include="Executor.h">
       <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWFiberWorker.h">
+      <Filter>Fiber</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWFiberThreadPool.h">
+      <Filter>Fiber</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWFiberCommon.h">
+      <Filter>Fiber</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWFiberMain.h">
+      <Filter>Fiber</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWFiberTask.h">
+      <Filter>Fiber</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_fiber1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FiberExecutor.h">
+      <Filter>Test\Fiber</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

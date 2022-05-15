@@ -141,7 +141,13 @@
   <ItemGroup>
     <ClInclude Include="Console.h" />
     <ClInclude Include="Executor.h" />
+    <ClInclude Include="FiberExecutor.h" />
     <ClInclude Include="Goods.h" />
+    <ClInclude Include="LIWFiberMain.h" />
+    <ClInclude Include="LIWFiberTask.h" />
+    <ClInclude Include="LIWFiberWorker.h" />
+    <ClInclude Include="LIWFiberCommon.h" />
+    <ClInclude Include="LIWFiberThreadPool.h" />
     <ClInclude Include="LIWITask.h" />
     <ClInclude Include="LIWThreadPool.h" />
     <ClInclude Include="LIWThreadSafeQueue.h" />
@@ -150,11 +156,16 @@
     <ClInclude Include="MyTask_Worker.h" />
     <ClInclude Include="tester0.h" />
     <ClInclude Include="tester1.h" />
+    <ClInclude Include="tester_fiber1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Executor.cpp" />
+    <ClCompile Include="FiberExecutor.cpp" />
     <ClCompile Include="Goods.cpp" />
+    <ClCompile Include="LIWFiberMain.cpp" />
+    <ClCompile Include="LIWFiberWorker.cpp" />
+    <ClCompile Include="LIWFiberThreadPool.cpp" />
     <ClCompile Include="LIWThreadPool.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyTask_Consumer.cpp" />
