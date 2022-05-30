@@ -10,7 +10,9 @@ namespace LIW {
 		class LIWThreadSafeQueue {
 		public:
 			typedef typename std::queue<T>::size_type size_type;
-
+		private:
+			typedef std::lock_guard<std::mutex> lock_guard;
+		public:
 			LIWThreadSafeQueue() = default;
 			LIWThreadSafeQueue(const LIWThreadSafeQueue&) = delete;
 			LIWThreadSafeQueue& operator=(const LIWThreadSafeQueue&) = delete;
@@ -20,12 +22,12 @@ namespace LIW {
 			/// </summary>
 			/// <param name="val"> Value to enqueue. </param>
 			inline void push(const T& val){
-				std::lock_guard<std::mutex> lock(__m_mtx_data);
+				lock_guard lock(__m_mtx_data);
 				__m_queue.push(val);
 				__m_cv_nonempty.notify_one();
 			}
 			inline void push(T&& val) {
-				std::lock_guard<std::mutex> lock(__m_mtx_data);
+				lock_guard lock(__m_mtx_data);
 				__m_queue.emplace(val);
 				__m_cv_nonempty.notify_one();
 			}
@@ -36,7 +38,7 @@ namespace LIW {
 			/// <param name="valOut"> Value dequeued. </param>
 			/// <returns> Size of queue after poping. If -1, meaning the queue is empty. </returns>
 			int pop_now(T& valOut) {
-				std::lock_guard<std::mutex> lock(__m_mtx_data);
+				lock_guard lock(__m_mtx_data);
 				if (__m_queue.empty()) {
 					return -1;
 				}
@@ -70,22 +72,22 @@ namespace LIW {
 			/// Get a copy of the front of the queue. 
 			/// </summary>
 			/// <returns> Copy of the front element. </returns>
-			inline T front() { return __m_queue.front(); }
+			inline T front() { lock_guard lk(__m_mtx_data); return __m_queue.front(); }
 			/// <summary>
 			/// Get a copy of the end of the queue. 
 			/// </summary>
 			/// <returns> Copy of the last element. </returns>
-			inline T back() { return __m_queue.back(); }
+			inline T back() { lock_guard lk(__m_mtx_data); return __m_queue.back(); }
 			/// <summary>
 			/// Get size of queue. 
 			/// </summary>
 			/// <returns> Size of queue. </returns>
-			inline typename size_type size() const { return __m_queue.size(); }
+			inline typename size_type size() const { lock_guard lk(__m_mtx_data); return __m_queue.size(); }
 			/// <summary>
 			/// Get if queue is empty. 
 			/// </summary>
 			/// <returns> Is queue empty. </returns>
-			inline bool empty() const { return __m_queue.empty(); }
+			inline bool empty() const { lock_guard lk(__m_mtx_data); return __m_queue.empty(); }
 
 			/// <summary>
 			/// Block the thread until queue is empty. 
@@ -106,7 +108,7 @@ namespace LIW {
 		protected:
 			std::queue<T> __m_queue;
 		private:
-			std::mutex __m_mtx_data;
+			mutable std::mutex __m_mtx_data;
 			std::condition_variable __m_cv_nonempty;
 			//std::condition_variable __m_cv_empty;
 			bool __m_running = true;

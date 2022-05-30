@@ -83,5 +83,8 @@
     <ClInclude Include="Executor.h">
       <Filter>Test</Filter>
     </ClInclude>
+    <ClInclude Include="LIWThreadSafeQueueSized.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

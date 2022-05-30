@@ -145,6 +145,7 @@
     <ClInclude Include="LIWITask.h" />
     <ClInclude Include="LIWThreadPool.h" />
     <ClInclude Include="LIWThreadSafeQueue.h" />
+    <ClInclude Include="LIWThreadSafeQueueSized.h" />
     <ClInclude Include="MyTask_Consumer.h" />
     <ClInclude Include="MyTask_Printer.h" />
     <ClInclude Include="MyTask_Worker.h" />
