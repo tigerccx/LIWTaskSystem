@@ -151,6 +151,8 @@
     <ClInclude Include="MyTask_Worker.h" />
     <ClInclude Include="tester0.h" />
     <ClInclude Include="tester1.h" />
+    <ClInclude Include="tester_correctness_immed_api.h" />
+    <ClInclude Include="tester_correctness_wait_api.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />

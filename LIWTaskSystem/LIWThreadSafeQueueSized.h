@@ -27,9 +27,9 @@ namespace LIW {
 			inline bool push_now(const T& val) {
 				lock_guard lk(__m_mtx_data);
 				if (__m_back.load(std::memory_order_relaxed) - __m_front.load(std::memory_order_relaxed) < Size) {
-					size_type back = __m_back.fetch_add(1, std::memory_order_release);
-					__m_queue[back % Size] = val;
+					__m_queue[__m_back.fetch_add(1, std::memory_order_release) % Size] = val;
 					__m_cv_nonempty.notify_one();
+					return true;
 				}
 				else
 				{
@@ -39,9 +39,9 @@ namespace LIW {
 			inline bool push_now(T&& val) {
 				lock_guard lk(__m_mtx_data);
 				if (__m_back.load(std::memory_order_relaxed) - __m_front.load(std::memory_order_relaxed) < Size) {
-					size_type back = __m_back.fetch_add(1, std::memory_order_release);
-					__m_queue[back % Size] = val;
+					__m_queue[__m_back.fetch_add(1, std::memory_order_release) % Size] = val;
 					__m_cv_nonempty.notify_one();
+					return true;
 				}
 				else {
 					return false;
@@ -50,23 +50,21 @@ namespace LIW {
 
 			inline void push(const T& val) {
 				uniq_lock lk_full(__m_mtx_data);
-				while (__m_back.load(std::memory_order_relaxed) - __m_front.load(std::memory_order_relaxed) < Size && __m_running) {
+				while (__m_back.load(std::memory_order_relaxed) - __m_front.load(std::memory_order_relaxed) >= Size && __m_running) {
 					__m_cv_nonfull.wait(lk_full);
 				}
 				if (__m_running) {
-					size_type back = __m_back.fetch_add(1, std::memory_order_release);
-					__m_queue[back % Size] = val;
+					__m_queue[__m_back.fetch_add(1, std::memory_order_release) % Size] = val;
 					__m_cv_nonempty.notify_one();
 				}
 			}
 			inline void push(T&& val) {
-				uniq_lock lk_full(__m_mtx_data);
-				while (__m_back.load(std::memory_order_relaxed) - __m_front.load(std::memory_order_relaxed) < Size && __m_running) {
-					__m_cv_nonfull.wait(lk_full);
+				uniq_lock lk(__m_mtx_data);
+				while (__m_back.load(std::memory_order_relaxed) - __m_front.load(std::memory_order_relaxed) >= Size && __m_running) {
+					__m_cv_nonfull.wait(lk);
 				}
 				if (__m_running) {
-					size_type back = __m_back.fetch_add(1, std::memory_order_release);
-					__m_queue[back % Size] = val;
+					__m_queue[__m_back.fetch_add(1, std::memory_order_release) % Size] = val;
 					__m_cv_nonempty.notify_one();
 				}
 			}
@@ -78,9 +76,8 @@ namespace LIW {
 			/// <returns> Is operation successful. </returns>
 			bool pop_now(T& valOut) {
 				lock_guard lk(__m_mtx_data);
-				if (__m_back.load(std::memory_order_relaxed) == __m_front.load(std::memory_order_relaxed)) {
-					size_type front = __m_front.fetch_add(1, std::memory_order_release);
-					valOut = std::move(__m_queue[front % Size]);
+				if (__m_back.load(std::memory_order_relaxed) > __m_front.load(std::memory_order_relaxed)) {
+					valOut = std::move(__m_queue[__m_front.fetch_add(1, std::memory_order_release) % Size]);
 					__m_cv_nonfull.notify_one();
 					return true;
 				}
@@ -93,15 +90,14 @@ namespace LIW {
 			/// Pop from queue when not empty. 
 			/// </summary>
 			/// <param name="valOut"> Value dequeued. </param>
-			/// <returns> Is operation successful. </returns>
-			int pop(T& valOut) {
-				uniq_lock lock_empty(__m_mtx_data);
-				while (__m_back.load(std::memory_order_relaxed) == __m_front.load(std::memory_order_relaxed) && __m_running) {
-					__m_cv_nonempty.wait(lock_empty);
+			/// <returns> Is operation successful. Unsuccess means operation terminated. </returns>
+			bool pop(T& valOut) {
+				uniq_lock lk(__m_mtx_data);
+				while (__m_back.load(std::memory_order_relaxed) <= __m_front.load(std::memory_order_relaxed) && __m_running) {
+					__m_cv_nonempty.wait(lk);
 				}
 				if (__m_running) {
-					size_type front = __m_front.fetch_add(1, std::memory_order_release);
-					valOut = std::move(__m_queue[front % Size]);
+					valOut = std::move(__m_queue[__m_front.fetch_add(1, std::memory_order_release) % Size]);
 					__m_cv_nonfull.notify_one();
 					return true;
 				}
@@ -118,7 +114,7 @@ namespace LIW {
 			/// <returns> Is operation successful. </returns>
 			inline bool front(T& valOut) {
 				lock_guard lk(__m_mtx_data);
-				if (__m_front.load(std::memory_order_acquire) != __m_back.load(std::memory_order_acquire)) {
+				if (__m_front.load(std::memory_order_relaxed) != __m_back.load(std::memory_order_relaxed)) {
 					valOut = __m_queue[__m_front.load(std::memory_order_relaxed) % Size];
 					return true;
 				}
@@ -133,7 +129,7 @@ namespace LIW {
 			/// <returns> Is operation successful. </returns>
 			inline bool back(T& valOut) {
 				lock_guard lk(__m_mtx_data);
-				if (__m_front.load(std::memory_order_acquire) != __m_back.load(std::memory_order_acquire)) {
+				if (__m_front.load(std::memory_order_relaxed) != __m_back.load(std::memory_order_relaxed)) {
 					valOut = __m_queue[__m_back.load(std::memory_order_relaxed) - 1 % Size];
 					return true;
 				}
@@ -169,7 +165,9 @@ namespace LIW {
 		protected:
 			T __m_queue[Size];
 			std::atomic<size_type> __m_front;
+			//size_type __m_front = 0;
 			std::atomic<size_type> __m_back;
+			//size_type __m_back = 0;
 		private:
 			mutable std::mutex __m_mtx_data;
 			std::condition_variable __m_cv_nonempty;
