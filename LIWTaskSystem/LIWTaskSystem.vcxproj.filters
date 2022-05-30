@@ -92,5 +92,11 @@
     <ClInclude Include="tester_correctness_wait_api.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="tester_correctness_immed_api_sizefree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_correctness_wait_api_sizefree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

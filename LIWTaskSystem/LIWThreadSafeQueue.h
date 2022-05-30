@@ -18,41 +18,44 @@ namespace LIW {
 			LIWThreadSafeQueue& operator=(const LIWThreadSafeQueue&) = delete;
 
 			/// <summary>
-			/// Push a value into queue. 
+			/// Push a value into queue immediately. 
 			/// </summary>
 			/// <param name="val"> Value to enqueue. </param>
-			inline void push(const T& val){
+			/// <returns> Is operation successful. </returns>
+			inline bool push_now(const T& val){
 				lock_guard lock(__m_mtx_data);
 				__m_queue.push(val);
 				__m_cv_nonempty.notify_one();
+				return true;
 			}
-			inline void push(T&& val) {
+			inline bool push_now(T&& val) {
 				lock_guard lock(__m_mtx_data);
 				__m_queue.emplace(val);
 				__m_cv_nonempty.notify_one();
+				return true;
 			}
 
 			/// <summary>
 			/// Pop from queue immediately. 
 			/// </summary>
 			/// <param name="valOut"> Value dequeued. </param>
-			/// <returns> Size of queue after poping. If -1, meaning the queue is empty. </returns>
-			int pop_now(T& valOut) {
+			/// <returns> Is operation successful. </returns>
+			bool pop_now(T& valOut) {
 				lock_guard lock(__m_mtx_data);
 				if (__m_queue.empty()) {
-					return -1;
+					return false;
 				}
 				valOut = std::move(__m_queue.front());
 				__m_queue.pop();
-				return (int)__m_queue.size();
+				return true;
 			}
 
 			/// <summary>
 			/// Pop from queue when not empty. 
 			/// </summary>
 			/// <param name="valOut"> Value dequeued. </param>
-			/// <returns> Size of queue after poping. If -1, meaning the queue is finishing up. </returns>
-			int pop(T& valOut) {
+			/// <returns> Is operation successful. Unsuccess means operation terminated. </returns>
+			bool pop(T& valOut) {
 				std::unique_lock<std::mutex> lock_empty(__m_mtx_data);
 				while (__m_queue.empty() && __m_running) {
 					__m_cv_nonempty.wait(lock_empty);
@@ -60,24 +63,35 @@ namespace LIW {
 				if (__m_running) {
 					valOut = std::move(__m_queue.front());
 					__m_queue.pop();
-					return (int)__m_queue.size();
+					return true;
 				}
-				else
-				{
-					return -1;
+				else {
+					return false;
 				}
 			}
 
 			/// <summary>
 			/// Get a copy of the front of the queue. 
 			/// </summary>
-			/// <returns> Copy of the front element. </returns>
-			inline T front() { lock_guard lk(__m_mtx_data); return __m_queue.front(); }
+			/// <param name="valOut"> Copy of the front element. </param>
+			/// <returns> Is operation successful. Unsuccess means queue empty. </returns>
+			bool front(T& valOut) {
+				lock_guard lk(__m_mtx_data);
+				if (__m_queue.empty()) return false;
+				valOut = __m_queue.front();
+				return true;
+			}
 			/// <summary>
 			/// Get a copy of the end of the queue. 
 			/// </summary>
-			/// <returns> Copy of the last element. </returns>
-			inline T back() { lock_guard lk(__m_mtx_data); return __m_queue.back(); }
+			/// <param name="valOut"> Copy of the last element. </param>
+			/// <returns> Is operation successful. Unsuccess means queue empty. </returns>
+			bool back(T& valOut) {
+				lock_guard lk(__m_mtx_data);
+				if (__m_queue.empty()) return false;
+				valOut = __m_queue.back();
+				return true;
+			}
 			/// <summary>
 			/// Get size of queue. 
 			/// </summary>
@@ -94,8 +108,6 @@ namespace LIW {
 			/// </summary>
 			inline void block_till_empty() {
 				while (!__m_queue.empty()) { std::this_thread::yield(); }
-				//std::unique_lock<std::mutex> lock_nonempty(__m_mtx_data);
-				//__m_cv_empty.wait(lock_nonempty, [&]() {return __m_queue.empty(); });
 			}
 			/// <summary>
 			/// Notify all pop() calls to stop blocking and exit. 

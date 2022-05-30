@@ -28,7 +28,7 @@ void LIW::LIWThreadPool::Init(int minWorkers, int maxWorkers)
 
 bool LIW::LIWThreadPool::Submit(LIWITask* task)
 {
-	m_tasks.push(task);
+	m_tasks.push_now(task);
 	return true;
 }
 

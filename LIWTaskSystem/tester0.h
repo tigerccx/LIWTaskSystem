@@ -24,8 +24,8 @@ void Worker(int idx) {
 		for (int i = 0; i < 100; ++i) {
 			count += rand() % 100;
 		}
-		queue_.push(count);
-		queue_outputs_.push("Worker[" + to_string(idx) + "] putting [" + to_string(count) + "] in queue.\n");
+		queue_.push_now(count);
+		queue_outputs_.push_now("Worker[" + to_string(idx) + "] putting [" + to_string(count) + "] in queue.\n");
 		//this_thread::sleep_for(100ms);
 	}
 }
@@ -43,7 +43,7 @@ void Consumer(int idx) {
 		//}
 		queue_.pop(count);
 		//lock_guard<mutex> lckout(mtxOutput);
-		queue_outputs_.push("Consumer[" + to_string(idx) + "] taking [" + to_string(count) + "] from queue.\n");
+		queue_outputs_.push_now("Consumer[" + to_string(idx) + "] taking [" + to_string(count) + "] from queue.\n");
 	}
 }
 
