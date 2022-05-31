@@ -17,6 +17,8 @@ LIWThreadSafeQueue<int> queue_;
 LIWThreadSafeQueue<string> queue_outputs_;
 
 bool toContinue = true;
+size_t GOODS_QUEUE_SIZE = 1024;
+size_t PRINT_QUEUE_SIZE = 4096;
 
 void Worker(int idx) {
 	while (toContinue) {
@@ -24,7 +26,9 @@ void Worker(int idx) {
 		for (int i = 0; i < 100; ++i) {
 			count += rand() % 100;
 		}
+		while (queue_.size() > GOODS_QUEUE_SIZE) { }
 		queue_.push_now(count);
+		while (queue_outputs_.size() > PRINT_QUEUE_SIZE) { }
 		queue_outputs_.push_now("Worker[" + to_string(idx) + "] putting [" + to_string(count) + "] in queue.\n");
 		//this_thread::sleep_for(100ms);
 	}
@@ -43,6 +47,7 @@ void Consumer(int idx) {
 		//}
 		queue_.pop(count);
 		//lock_guard<mutex> lckout(mtxOutput);
+		while (queue_outputs_.size() > PRINT_QUEUE_SIZE) {}
 		queue_outputs_.push_now("Consumer[" + to_string(idx) + "] taking [" + to_string(count) + "] from queue.\n");
 	}
 }
@@ -64,7 +69,7 @@ void tester0() {
 	vector<thread> threadConsumers;
 	vector<thread> threadPrinters;
 
-	ofstream fout("testout.txt");
+	ofstream fout("../../testout0.txt");
 	cout.set_rdbuf(fout.rdbuf());
 
 	for (int i = 0; i < 32; ++i) {

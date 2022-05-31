@@ -29,7 +29,7 @@ void tester1() {
 	Executor::pool.Init(countThreads);
 	//Executor::pool.Init(32);
 
-	ofstream fout("testout1.txt");
+	ofstream fout("../../testout1.txt");
 	cout.set_rdbuf(fout.rdbuf());
 
 	thread threadTest(Run);

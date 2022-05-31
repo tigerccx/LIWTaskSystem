@@ -14,6 +14,7 @@ namespace LIW {
 		private:
 			typedef std::lock_guard<std::mutex> lock_guard;
 			typedef std::unique_lock<std::mutex> uniq_lock;
+			const std::chrono::milliseconds c_max_wait = std::chrono::milliseconds(1);
 		public:
 			LIWThreadSafeQueueSized() = default;
 			LIWThreadSafeQueueSized(const LIWThreadSafeQueueSized&) = delete;
@@ -55,7 +56,7 @@ namespace LIW {
 			bool push(const T& val) {
 				uniq_lock lk_full(__m_mtx_data);
 				while (__m_back.load(std::memory_order_relaxed) - __m_front.load(std::memory_order_relaxed) >= Size && __m_running) {
-					__m_cv_nonfull.wait(lk_full);
+					__m_cv_nonfull.wait_for(lk_full, c_max_wait);
 				}
 				if (__m_running) {
 					__m_queue[__m_back.fetch_add(1, std::memory_order_release) % Size] = val;
@@ -69,7 +70,7 @@ namespace LIW {
 			bool push(T&& val) {
 				uniq_lock lk(__m_mtx_data);
 				while (__m_back.load(std::memory_order_relaxed) - __m_front.load(std::memory_order_relaxed) >= Size && __m_running) {
-					__m_cv_nonfull.wait(lk);
+					__m_cv_nonfull.wait_for(lk, c_max_wait);
 				}
 				if (__m_running) {
 					__m_queue[__m_back.fetch_add(1, std::memory_order_release) % Size] = val;
@@ -106,7 +107,7 @@ namespace LIW {
 			bool pop(T& valOut) {
 				uniq_lock lk(__m_mtx_data);
 				while (__m_back.load(std::memory_order_relaxed) <= __m_front.load(std::memory_order_relaxed) && __m_running) {
-					__m_cv_nonempty.wait(lk);
+					__m_cv_nonempty.wait_for(lk, c_max_wait);
 				}
 				if (__m_running) {
 					valOut = std::move(__m_queue[__m_front.fetch_add(1, std::memory_order_release) % Size]);

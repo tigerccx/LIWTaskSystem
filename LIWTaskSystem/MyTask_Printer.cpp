@@ -3,7 +3,7 @@
 void MyTask_Flusher::Execute(void*)
 {
 	std::string str;
-	while (Console::m_outputs.pop_now(str) >= 0) {
+	while (Console::m_outputs.pop_now(str)) {
 		std::cout << str;
 	}
 }

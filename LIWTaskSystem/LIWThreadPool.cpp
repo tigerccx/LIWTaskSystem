@@ -74,7 +74,7 @@ void LIW::LIWThreadPool::ProcessTask()
 	//TODO: Do task cleaning somewhere
 	while (!m_tasks.empty() || __m_isRunning) {
 		LIWITask* task = nullptr;
-		if (m_tasks.pop(task) >= 0) {
+		if (m_tasks.pop(task)) {
 			task->Execute(nullptr);
 			delete task;
 		}

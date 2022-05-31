@@ -12,6 +12,7 @@ namespace LIW {
 			typedef typename std::queue<T>::size_type size_type;
 		private:
 			typedef std::lock_guard<std::mutex> lock_guard;
+			const std::chrono::milliseconds c_max_wait = std::chrono::milliseconds(1);
 		public:
 			LIWThreadSafeQueue() = default;
 			LIWThreadSafeQueue(const LIWThreadSafeQueue&) = delete;
@@ -58,7 +59,7 @@ namespace LIW {
 			bool pop(T& valOut) {
 				std::unique_lock<std::mutex> lock_empty(__m_mtx_data);
 				while (__m_queue.empty() && __m_running) {
-					__m_cv_nonempty.wait(lock_empty);
+					__m_cv_nonempty.wait_for(lock_empty, c_max_wait);
 				}
 				if (__m_running) {
 					valOut = std::move(__m_queue.front());
