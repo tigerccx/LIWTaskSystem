@@ -22,6 +22,12 @@
     <Filter Include="Test">
       <UniqueIdentifier>{f601d0ff-2c09-4243-90e5-3230fb32d18e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test\Sizefree">
+      <UniqueIdentifier>{a2118772-7664-4801-8250-c6ac9f95087d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\Sized">
+      <UniqueIdentifier>{e223380b-d9e1-4878-b7b8-57c421bddfe4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LIWThreadPool.cpp">
@@ -30,23 +36,35 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MyTask_Worker.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
-    <ClCompile Include="MyTask_Consumer.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
-    <ClCompile Include="Goods.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
     <ClCompile Include="Console.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
-    <ClCompile Include="MyTask_Printer.cpp">
-      <Filter>Test</Filter>
+      <Filter>Test\Sizefree</Filter>
     </ClCompile>
     <ClCompile Include="Executor.cpp">
-      <Filter>Test</Filter>
+      <Filter>Test\Sizefree</Filter>
+    </ClCompile>
+    <ClCompile Include="Goods.cpp">
+      <Filter>Test\Sizefree</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTask_Consumer.cpp">
+      <Filter>Test\Sizefree</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTask_Printer.cpp">
+      <Filter>Test\Sizefree</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTask_Worker.cpp">
+      <Filter>Test\Sizefree</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTask_Consumer_Sized.cpp">
+      <Filter>Test\Sized</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTask_Printer_Sized.cpp">
+      <Filter>Test\Sized</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTask_Worker_Sized.cpp">
+      <Filter>Test\Sized</Filter>
+    </ClCompile>
+    <ClCompile Include="ExecutorSized.cpp">
+      <Filter>Test\Sized</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,29 +77,11 @@
     <ClInclude Include="LIWITask.h">
       <Filter>TaskSystem</Filter>
     </ClInclude>
-    <ClInclude Include="MyTask_Worker.h">
-      <Filter>Test</Filter>
-    </ClInclude>
-    <ClInclude Include="MyTask_Consumer.h">
-      <Filter>Test</Filter>
-    </ClInclude>
-    <ClInclude Include="Goods.h">
-      <Filter>Test</Filter>
-    </ClInclude>
     <ClInclude Include="tester0.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="tester1.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Console.h">
-      <Filter>Test</Filter>
-    </ClInclude>
-    <ClInclude Include="MyTask_Printer.h">
-      <Filter>Test</Filter>
-    </ClInclude>
-    <ClInclude Include="Executor.h">
-      <Filter>Test</Filter>
     </ClInclude>
     <ClInclude Include="LIWThreadSafeQueueSized.h">
       <Filter>Utility</Filter>
@@ -97,6 +97,45 @@
     </ClInclude>
     <ClInclude Include="tester_correctness_wait_api_sizefree.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="tester0_sizefree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWThreadPoolSized.h">
+      <Filter>TaskSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="tester1_sizefree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTask_Worker.h">
+      <Filter>Test\Sizefree</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Test\Sizefree</Filter>
+    </ClInclude>
+    <ClInclude Include="Executor.h">
+      <Filter>Test\Sizefree</Filter>
+    </ClInclude>
+    <ClInclude Include="Goods.h">
+      <Filter>Test\Sizefree</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTask_Consumer.h">
+      <Filter>Test\Sizefree</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTask_Printer.h">
+      <Filter>Test\Sizefree</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTask_Consumer_Sized.h">
+      <Filter>Test\Sized</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTask_Printer_Sized.h">
+      <Filter>Test\Sized</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTask_Worker_Sized.h">
+      <Filter>Test\Sized</Filter>
+    </ClInclude>
+    <ClInclude Include="ExecutorSized.h">
+      <Filter>Test\Sized</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

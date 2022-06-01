@@ -4,10 +4,10 @@
 #include <string>
 #include <windows.h>
 
-#include "ExecutorSized.h"
-#include "MyTask_Worker_Sized.h"
-#include "MyTask_Consumer_Sized.h"
-#include "MyTask_Printer_Sized.h"
+#include "Executor.h"
+#include "MyTask_Worker.h"
+#include "MyTask_Consumer.h"
+#include "MyTask_Printer.h"
 
 using namespace std;
 using namespace LIW;
@@ -17,31 +17,30 @@ bool toContinue = true;
 
 void Run() {
 	while (toContinue) {
-		ExecutorSized::pool.Submit(new MyTask_Worker_Sized());
-		ExecutorSized::pool.Submit(new MyTask_Consumer_Sized());
+		Executor::pool.Submit(new MyTask_Worker());
+		Executor::pool.Submit(new MyTask_Consumer());
 	}
-	cout << "Stop Running" << endl;
 }
 
-void tester1() {
+void tester1_sizefree() {
 	int countThreads = thread::hardware_concurrency();
 	if (countThreads == 0)
 		countThreads = 32;
-	ExecutorSized::pool.Init(countThreads);
+	Executor::pool.Init(countThreads);
 	//Executor::pool.Init(32);
 
-	ofstream fout("../../testout1.txt");
+	ofstream fout("../../testout1_sizefree.txt");
 	cout.set_rdbuf(fout.rdbuf());
 
 	thread threadTest(Run);
 
-	Sleep(5 * 1000);
+	Sleep(20 * 1000);
 
 	toContinue = false;
 
 	threadTest.join();
 
-	ExecutorSized::pool.WaitAndStop();
+	Executor::pool.WaitAndStop();
 
 	Goods::m_goods.block_till_empty();
 	Sleep(1);

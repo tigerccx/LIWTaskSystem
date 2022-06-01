@@ -5,6 +5,8 @@
 #include <queue>
 #include <atomic>
 
+#include <iostream>
+
 namespace LIW {
 	namespace Util {
 		template<class T, uint64_t Size>

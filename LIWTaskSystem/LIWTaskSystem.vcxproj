@@ -141,16 +141,23 @@
   <ItemGroup>
     <ClInclude Include="Console.h" />
     <ClInclude Include="Executor.h" />
+    <ClInclude Include="ExecutorSized.h" />
     <ClInclude Include="Goods.h" />
     <ClInclude Include="LIWITask.h" />
     <ClInclude Include="LIWThreadPool.h" />
+    <ClInclude Include="LIWThreadPoolSized.h" />
     <ClInclude Include="LIWThreadSafeQueue.h" />
     <ClInclude Include="LIWThreadSafeQueueSized.h" />
     <ClInclude Include="MyTask_Consumer.h" />
+    <ClInclude Include="MyTask_Consumer_Sized.h" />
     <ClInclude Include="MyTask_Printer.h" />
+    <ClInclude Include="MyTask_Printer_Sized.h" />
     <ClInclude Include="MyTask_Worker.h" />
+    <ClInclude Include="MyTask_Worker_Sized.h" />
     <ClInclude Include="tester0.h" />
+    <ClInclude Include="tester0_sizefree.h" />
     <ClInclude Include="tester1.h" />
+    <ClInclude Include="tester1_sizefree.h" />
     <ClInclude Include="tester_correctness_immed_api.h" />
     <ClInclude Include="tester_correctness_immed_api_sizefree.h" />
     <ClInclude Include="tester_correctness_wait_api.h" />
@@ -159,12 +166,16 @@
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Executor.cpp" />
+    <ClCompile Include="ExecutorSized.cpp" />
     <ClCompile Include="Goods.cpp" />
     <ClCompile Include="LIWThreadPool.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyTask_Consumer.cpp" />
+    <ClCompile Include="MyTask_Consumer_Sized.cpp" />
     <ClCompile Include="MyTask_Printer.cpp" />
+    <ClCompile Include="MyTask_Printer_Sized.cpp" />
     <ClCompile Include="MyTask_Worker.cpp" />
+    <ClCompile Include="MyTask_Worker_Sized.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

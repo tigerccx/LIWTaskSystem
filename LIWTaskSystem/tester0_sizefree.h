@@ -7,18 +7,18 @@
 
 #include <windows.h>
 
-#include "LIWThreadSafeQueueSized.h"
+#include "LIWThreadSafeQueue.h"
 
 using namespace std;
 using namespace LIW;
 using namespace Util;
 
-const size_t GOODS_QUEUE_SIZE = 1024;
-const size_t PRINT_QUEUE_SIZE = 4096;
-LIWThreadSafeQueueSized<int, GOODS_QUEUE_SIZE> queue_;
-LIWThreadSafeQueueSized<string, PRINT_QUEUE_SIZE> queue_outputs_;
+LIWThreadSafeQueue<int> queue_;
+LIWThreadSafeQueue<string> queue_outputs_;
 
 bool toContinue = true;
+size_t GOODS_QUEUE_SIZE = 1024;
+size_t PRINT_QUEUE_SIZE = 4096;
 
 void Worker(int idx) {
 	while (toContinue) {
@@ -26,8 +26,10 @@ void Worker(int idx) {
 		for (int i = 0; i < 100; ++i) {
 			count += rand() % 100;
 		}
-		queue_.push(count);
-		queue_outputs_.push("Worker[" + to_string(idx) + "] putting [" + to_string(count) + "] in queue.\n");
+		while (queue_.size() > GOODS_QUEUE_SIZE) { std::this_thread::yield(); }
+		queue_.push_now(count);
+		while (queue_outputs_.size() > PRINT_QUEUE_SIZE) { std::this_thread::yield(); }
+		queue_outputs_.push_now("Worker[" + to_string(idx) + "] putting [" + to_string(count) + "] in queue.\n");
 		//this_thread::sleep_for(100ms);
 	}
 }
@@ -45,7 +47,8 @@ void Consumer(int idx) {
 		//}
 		queue_.pop(count);
 		//lock_guard<mutex> lckout(mtxOutput);
-		queue_outputs_.push("Consumer[" + to_string(idx) + "] taking [" + to_string(count) + "] from queue.\n");
+		while (queue_outputs_.size() > PRINT_QUEUE_SIZE) { std::this_thread::yield(); }
+		queue_outputs_.push_now("Consumer[" + to_string(idx) + "] taking [" + to_string(count) + "] from queue.\n");
 	}
 }
 
@@ -61,12 +64,12 @@ void Print() {
 //
 // Thread-safe Queue Tester
 //
-void tester0() {
+void tester0_sizefree() {
 	vector<thread> threadWorkers;
 	vector<thread> threadConsumers;
 	vector<thread> threadPrinters;
 
-	ofstream fout("../../testout0.txt");
+	ofstream fout("../../testout0_sizefree.txt");
 	cout.set_rdbuf(fout.rdbuf());
 
 	for (int i = 0; i < 32; ++i) {
