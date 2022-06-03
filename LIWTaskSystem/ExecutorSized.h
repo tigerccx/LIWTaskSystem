@@ -4,5 +4,5 @@
 class ExecutorSized
 {
 public:
-	static LIW::LIWThreadPoolSized<32768> pool;
+	static LIW::LIWThreadPoolSized<1048576> pool;
 };

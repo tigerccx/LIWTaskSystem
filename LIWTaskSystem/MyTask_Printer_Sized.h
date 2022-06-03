@@ -20,3 +20,17 @@ public:
 private:
     std::string m_str;
 };
+
+
+class MyTask_SpecializedPrinter_Sized :
+    public LIW::LIWITask
+{
+public:
+    MyTask_SpecializedPrinter_Sized(int val, bool isWorker) :
+        m_val(val), m_isWorker(isWorker) {}
+    void Execute(void*) override;
+private:
+    int m_val;
+    bool m_isWorker;
+};
+

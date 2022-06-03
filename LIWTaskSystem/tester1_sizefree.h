@@ -17,8 +17,10 @@ bool toContinue = true;
 
 void Run() {
 	while (toContinue) {
-		Executor::pool.Submit(new MyTask_Worker());
-		Executor::pool.Submit(new MyTask_Consumer());
+		if (Executor::pool.GetTasksCount() < 32768) {
+			Executor::pool.Submit(new MyTask_Worker());
+			Executor::pool.Submit(new MyTask_Consumer());
+		}
 	}
 }
 
@@ -34,7 +36,7 @@ void tester1_sizefree() {
 
 	thread threadTest(Run);
 
-	Sleep(20 * 1000);
+	Sleep(5 * 1000);
 
 	toContinue = false;
 

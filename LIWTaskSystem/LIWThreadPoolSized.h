@@ -44,6 +44,16 @@ namespace LIW {
 		/// </summary>
 		/// <returns> is running </returns>
 		inline bool IsRunning() const { return __m_isRunning; }
+		/// <summary>
+		/// Get the capacity of the task queue. 
+		/// </summary>
+		/// <returns> capacity of the task queue </returns>
+		inline constexpr uint64_t GetCapacity() const { return TasksSize; }
+		/// <summary>
+		/// Get the count of tasks currently in queue. 
+		/// </summary>
+		/// <returns> count of tasks to process </returns>
+		inline uint64_t GetTasksCount() const { return m_tasks.size(); }
 
 		/// <summary>
 		/// Submit task for the thread pool to execute when task queue is not full. 

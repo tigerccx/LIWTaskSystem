@@ -17,8 +17,10 @@ bool toContinue = true;
 
 void Run() {
 	while (toContinue) {
-		ExecutorSized::pool.Submit(new MyTask_Worker_Sized());
-		ExecutorSized::pool.Submit(new MyTask_Consumer_Sized());
+		if (ExecutorSized::pool.GetTasksCount() + 128 < ExecutorSized::pool.GetCapacity()) {
+			ExecutorSized::pool.Submit(new MyTask_Worker_Sized());
+			ExecutorSized::pool.Submit(new MyTask_Consumer_Sized());
+		}
 	}
 	cout << "Stop Running" << endl;
 }

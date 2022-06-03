@@ -4,8 +4,7 @@ void MyTask_Worker_Sized::Execute(void*)
 {
 	int good = rand() % 1000;
 	Goods::m_goods.push_now(good);
-	auto taskPrint = new MyTask_Printer_Sized("Worker putting [" + std::to_string(good) + "]\n");
-	while (!ExecutorSized::pool.SubmitNow(taskPrint)) {
-		std::this_thread::yield();
-	}
+	//auto taskPrint = new MyTask_Printer_Sized("Worker putting [" + std::to_string(good) + "]\n");
+	auto taskPrint = new MyTask_SpecializedPrinter_Sized(good, true);
+	ExecutorSized::pool.Submit(taskPrint);
 }

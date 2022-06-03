@@ -1,3 +1,3 @@
 #include "ExecutorSized.h"
 
-LIW::LIWThreadPoolSized<32768> ExecutorSized::pool;
+LIW::LIWThreadPoolSized<1048576> ExecutorSized::pool;
