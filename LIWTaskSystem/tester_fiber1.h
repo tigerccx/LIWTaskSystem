@@ -35,7 +35,7 @@ bool toContinue = true;
 
 void Run() {
 	while (toContinue) {
-		if (FiberExecutor::pool.GetTaskCount() < 10000) {
+		if (FiberExecutor::pool.GetTaskCount() < 32768) {
 			FiberExecutor::pool.Submit(new LIWFiberTask{ MyFiberTask_Worker });
 			FiberExecutor::pool.Submit(new LIWFiberTask{ MyFiberTask_Consumer });
 		}
@@ -49,12 +49,12 @@ void tester_fiber1() {
 	FiberExecutor::pool.Init(countThreads, 64);
 	//Executor::pool.Init(32);
 
-	ofstream fout("testout_fiber1.txt");
+	ofstream fout("../../testout_fiber1.txt");
 	cout.set_rdbuf(fout.rdbuf());
 
 	thread threadTest(Run);
 
-	Sleep(20 * 1000);
+	Sleep(5 * 1000);
 
 	toContinue = false;
 

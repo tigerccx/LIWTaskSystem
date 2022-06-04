@@ -39,7 +39,9 @@ namespace LIW {
 		//A loop which will yield after finishing runnning a run function
 		inline void Run() {
 			while (m_isRunning) {
+				m_state = LIWFiberState::Running;
 				m_runFunction(this, m_param);
+				m_state = LIWFiberState::Idle;
 				YieldToMain();
 			}
 		}
@@ -57,12 +59,12 @@ namespace LIW {
 		inline LIWFiberState GetState() const { return m_state; } 
 
 	private:
-		LIWFiberState m_state = LIWFiberState::Uninit;
-		LIWFiberRunner m_runFunction = nullptr;
-		void* m_param = nullptr;
-		LIWFiberMain* m_fiberMain = nullptr;
-		int m_id = -1;
-		bool m_isRunning = true;
+		LIWFiberState m_state = LIWFiberState::Uninit; // State of this fiber
+		LIWFiberRunner m_runFunction = nullptr; // Running function of this fiber
+		void* m_param = nullptr; // Parameters for the running function
+		LIWFiberMain* m_fiberMain = nullptr; // Current main fiber of the thread this fiber is running on
+		int m_id = -1; // ID of the fiber
+		bool m_isRunning = true; // Is this fiber still running? (Has it not been terminated?) 
 
 	private:
 		static void __stdcall InternalFiberRun(LPVOID param) {

@@ -1,5 +1,7 @@
 #pragma once
 #include <functional>
+#include <atomic>
+#include <list>
 
 namespace LIW {
 	class LIWFiberMain;
@@ -12,5 +14,6 @@ namespace LIW {
 	};
 
 	typedef void(*LIWFiberRunner)(LIWFiberWorker* thisFiber, void* param);
-
 }
+
+#define LIW_FIBER_RUNNER_DEF(function_name)

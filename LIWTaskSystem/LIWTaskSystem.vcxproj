@@ -157,6 +157,7 @@
     <ClInclude Include="tester0.h" />
     <ClInclude Include="tester1.h" />
     <ClInclude Include="tester_fiber1.h" />
+    <ClInclude Include="tester_fiber_wait.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />

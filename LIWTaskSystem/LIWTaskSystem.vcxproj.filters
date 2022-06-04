@@ -122,5 +122,8 @@
     <ClInclude Include="FiberExecutor.h">
       <Filter>Test\Fiber</Filter>
     </ClInclude>
+    <ClInclude Include="tester_fiber_wait.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
