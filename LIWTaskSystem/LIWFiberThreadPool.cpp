@@ -111,7 +111,7 @@ void LIW::LIWFiberThreadPool::ProcessTask(LIWFiberThreadPool* thisTP)
 			}
 		}
 		else if (thisTP->m_fibers.pop_now(fiber)) { // Acquire fiber from idle fiber list. //TODO: Currently this is spinning when empty. Make it wait. 
-			if (thisTP->m_tasks.pop(task)) { // Acquite task
+			if (thisTP->m_tasks.pop_now(task)) { // Acquite task
 				// Set fiber to perform task
 				fiber->SetMainFiber(fiberMain);
 				fiber->SetRunFunction(task->m_runner, task->m_param);

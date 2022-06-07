@@ -84,6 +84,9 @@
     <ClCompile Include="LIWFiberWorker.cpp">
       <Filter>Fiber</Filter>
     </ClCompile>
+    <ClCompile Include="FiberExecutorSized.cpp">
+      <Filter>Test\Fiber</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LIWThreadPool.h">
@@ -178,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="tester_fiber1.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWFiberThreadPoolSized.h">
+      <Filter>Fiber</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_fiber1_sized.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FiberExecutorSized.h">
+      <Filter>Test\Fiber</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

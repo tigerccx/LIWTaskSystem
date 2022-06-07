@@ -143,11 +143,13 @@
     <ClInclude Include="Executor.h" />
     <ClInclude Include="ExecutorSized.h" />
     <ClInclude Include="FiberExecutor.h" />
+    <ClInclude Include="FiberExecutorSized.h" />
     <ClInclude Include="Goods.h" />
     <ClInclude Include="LIWFiberCommon.h" />
     <ClInclude Include="LIWFiberMain.h" />
     <ClInclude Include="LIWFiberTask.h" />
     <ClInclude Include="LIWFiberThreadPool.h" />
+    <ClInclude Include="LIWFiberThreadPoolSized.h" />
     <ClInclude Include="LIWFiberWorker.h" />
     <ClInclude Include="LIWITask.h" />
     <ClInclude Include="LIWThreadPool.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="tester_correctness_wait_api.h" />
     <ClInclude Include="tester_correctness_wait_api_sizefree.h" />
     <ClInclude Include="tester_fiber1.h" />
+    <ClInclude Include="tester_fiber1_sized.h" />
     <ClInclude Include="tester_fiber_wait.h" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +179,7 @@
     <ClCompile Include="Executor.cpp" />
     <ClCompile Include="ExecutorSized.cpp" />
     <ClCompile Include="FiberExecutor.cpp" />
+    <ClCompile Include="FiberExecutorSized.cpp" />
     <ClCompile Include="Goods.cpp" />
     <ClCompile Include="LIWFiberMain.cpp" />
     <ClCompile Include="LIWFiberThreadPool.cpp" />
