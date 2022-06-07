@@ -19,6 +19,7 @@ void LIW::LIWThreadPool::Init(int numWorkers)
 
 void LIW::LIWThreadPool::Init(int minWorkers, int maxWorkers)
 {
+	//TODO: Make this adaptive somehow
 	__m_isRunning = true;
 	for (int i = 0; i < minWorkers; ++i) {
 		m_workers.emplace_back(std::thread(std::bind(&LIW::LIWThreadPool::ProcessTask, this)));
