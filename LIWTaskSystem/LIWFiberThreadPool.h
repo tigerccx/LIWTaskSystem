@@ -58,7 +58,7 @@ namespace LIW {
 		/// <param name="task"> task to execute </param>
 		/// <returns> is operation successful? </returns>
 		inline bool Submit(LIWFiberTask* task) {
-			m_tasks.push(task);
+			m_tasks.push_now(task);
 			return true;
 		}
 

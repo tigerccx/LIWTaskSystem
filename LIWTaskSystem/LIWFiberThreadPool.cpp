@@ -24,7 +24,7 @@ void LIW::LIWFiberThreadPool::Init(int minWorkers, int maxWorkers, int minFibers
 
 	for (int i = 0; i < minFibers; ++i) {
 		LIWFiberWorker* worker = new LIWFiberWorker(i);
-		m_fibers.push(worker);
+		m_fibers.push_now(worker);
 		m_fibersRegistered.emplace_back(worker);
 	}
 
@@ -83,7 +83,7 @@ LIW::LIWFiberThreadPool::counter_type LIW::LIWFiberThreadPool::DecreaseSyncCount
 	if (val <= 0) { // Counter reach 0, move all dependents to awake list
 		lock_guard_type lock(counter.m_mtx);
 		while (!counter.m_dependents.empty()) {
-			m_fibersAwakeList.push(counter.m_dependents.front());
+			m_fibersAwakeList.push_now(counter.m_dependents.front());
 			counter.m_dependents.pop_front();
 		}
 	}
@@ -99,7 +99,7 @@ void LIW::LIWFiberThreadPool::ProcessTask(LIWFiberThreadPool* thisTP)
 		   !thisTP->m_fibersAwakeList.empty() || 
 		   thisTP->m_isRunning) {
 		fiber = nullptr;
-		if (thisTP->m_fibersAwakeList.pop_now(fiber) >= 0) { // Acquire fiber from awake fiber list. 
+		if (thisTP->m_fibersAwakeList.pop_now(fiber)) { // Acquire fiber from awake fiber list. 
 			// Set fiber to perform task
 			fiber->SetMainFiber(fiberMain);
 			
@@ -107,11 +107,11 @@ void LIW::LIWFiberThreadPool::ProcessTask(LIWFiberThreadPool* thisTP)
 			fiberMain->YieldTo(fiber);
 
 			if (fiber->GetState() != LIWFiberState::Running) { // If fiber is not still running (meaning yielded manually), return for reuse. 
-				thisTP->m_fibers.push(fiber);
+				thisTP->m_fibers.push_now(fiber);
 			}
 		}
-		else if (thisTP->m_fibers.pop_now(fiber) >= 0) { // Acquire fiber from idle fiber list. //TODO: Currently this is spinning when empty. Make it wait. 
-			if (thisTP->m_tasks.pop(task) >= 0) { // Acquite task
+		else if (thisTP->m_fibers.pop_now(fiber)) { // Acquire fiber from idle fiber list. //TODO: Currently this is spinning when empty. Make it wait. 
+			if (thisTP->m_tasks.pop(task)) { // Acquite task
 				// Set fiber to perform task
 				fiber->SetMainFiber(fiberMain);
 				fiber->SetRunFunction(task->m_runner, task->m_param);
@@ -123,7 +123,7 @@ void LIW::LIWFiberThreadPool::ProcessTask(LIWFiberThreadPool* thisTP)
 				delete task;
 			}
 			if (fiber->GetState() != LIWFiberState::Running) { // If fiber is not still running (meaning yielded manually), return for reuse. 
-				thisTP->m_fibers.push(fiber);
+				thisTP->m_fibers.push_now(fiber);
 			}
 		}
 	}

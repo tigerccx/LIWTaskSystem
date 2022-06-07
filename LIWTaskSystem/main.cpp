@@ -8,10 +8,10 @@
 //	tester0_sizefree();
 //}
 
-#include "tester1.h"
-int main() {
-	tester1();	
-}
+//#include "tester1.h"
+//int main() {
+//	tester1();	
+//}
 
 //#include "tester1_sizefree.h"
 //int main() {
@@ -38,12 +38,12 @@ int main() {
 //	tester_correctness_wait_api_sizefree();
 //}
 
-//#include "tester_fiber1.h"
-//int main() {
-//	tester_fiber1();
-//}
-
-#include "tester_fiber_wait.h"
+#include "tester_fiber1.h"
 int main() {
-	tester_fiber_wait();
+	tester_fiber1();
 }
+
+//#include "tester_fiber_wait.h"
+//int main() {
+//	tester_fiber_wait();
+//}

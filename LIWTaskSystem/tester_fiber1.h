@@ -19,7 +19,7 @@ void MyFiberTask_Printer(LIWFiberWorker* thisFiber, void* param) {
 
 void MyFiberTask_Worker(LIWFiberWorker* thisFiber, void* param) {
 	int good = rand() % 1000;
-	Goods::m_goods.push(good);
+	Goods::m_goods.push_now(good);
 	string* strout = new string("Worker putting [" + std::to_string(good) + "]\n");
 	FiberExecutor::pool.Submit(new LIWFiberTask{ MyFiberTask_Printer,  strout });
 }
