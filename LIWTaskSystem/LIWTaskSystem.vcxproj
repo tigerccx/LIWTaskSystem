@@ -145,6 +145,7 @@
     <ClInclude Include="FiberExecutor.h" />
     <ClInclude Include="FiberExecutorSized.h" />
     <ClInclude Include="Goods.h" />
+    <ClInclude Include="LIWAllocation.h" />
     <ClInclude Include="LIWFiberCommon.h" />
     <ClInclude Include="LIWFiberMain.h" />
     <ClInclude Include="LIWFiberTask.h" />
@@ -152,10 +153,13 @@
     <ClInclude Include="LIWFiberThreadPoolSized.h" />
     <ClInclude Include="LIWFiberWorker.h" />
     <ClInclude Include="LIWITask.h" />
+    <ClInclude Include="LIWLGPoolAllocator.h" />
+    <ClInclude Include="LIWMemory.h" />
     <ClInclude Include="LIWThreadPool.h" />
     <ClInclude Include="LIWThreadPoolSized.h" />
     <ClInclude Include="LIWThreadSafeQueue.h" />
     <ClInclude Include="LIWThreadSafeQueueSized.h" />
+    <ClInclude Include="LIWLGStackAllocator.h" />
     <ClInclude Include="MyTask_Consumer.h" />
     <ClInclude Include="MyTask_Consumer_Sized.h" />
     <ClInclude Include="MyTask_Printer.h" />

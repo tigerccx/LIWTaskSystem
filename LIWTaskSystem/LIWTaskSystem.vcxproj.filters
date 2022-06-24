@@ -34,6 +34,9 @@
     <Filter Include="Fiber">
       <UniqueIdentifier>{4edf5f23-f1b1-4336-99e5-6944a4c38288}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{f7a1d902-2b34-404f-a4c6-cd4609279c14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LIWThreadPool.cpp">
@@ -190,6 +193,18 @@
     </ClInclude>
     <ClInclude Include="FiberExecutorSized.h">
       <Filter>Test\Fiber</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWMemory.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWLGStackAllocator.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWAllocation.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWLGPoolAllocator.h">
+      <Filter>Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
