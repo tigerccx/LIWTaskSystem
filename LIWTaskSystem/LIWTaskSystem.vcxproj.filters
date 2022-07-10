@@ -206,5 +206,8 @@
     <ClInclude Include="LIWLGPoolAllocator.h">
       <Filter>Memory</Filter>
     </ClInclude>
+    <ClInclude Include="LIWLGGPAllocator.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

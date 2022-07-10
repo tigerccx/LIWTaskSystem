@@ -40,7 +40,6 @@ namespace LIW {
 
 					m_dataBuffer = (char*)dataBuffer;
 					m_dataBufferRaw = (char*)dataBufferRaw;
-					assert(m_dataBuffer);
 					InitAllBlocks();
 				}
 
@@ -172,8 +171,8 @@ namespace LIW {
 				}
 
 			private:
-				char* m_availableList{ nullptr };
-				globalAllocator_type* m_globalAllocator{ nullptr };
+				char* m_availableList					{ nullptr }; // Available list. 
+				globalAllocator_type* m_globalAllocator	{ nullptr }; // Reference to its global allocator. 
 			};
 		};
 	}
