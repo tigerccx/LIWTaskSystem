@@ -116,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,6 +155,7 @@
     <ClInclude Include="LIWFiberThreadPoolSized.h" />
     <ClInclude Include="LIWFiberWorker.h" />
     <ClInclude Include="LIWITask.h" />
+    <ClInclude Include="LIWLGGPAllocator.h" />
     <ClInclude Include="LIWLGPoolAllocator.h" />
     <ClInclude Include="LIWMemory.h" />
     <ClInclude Include="LIWThreadPool.h" />
@@ -160,6 +163,7 @@
     <ClInclude Include="LIWThreadSafeQueue.h" />
     <ClInclude Include="LIWThreadSafeQueueSized.h" />
     <ClInclude Include="LIWLGStackAllocator.h" />
+    <ClInclude Include="LIWTypes.h" />
     <ClInclude Include="MyTask_Consumer.h" />
     <ClInclude Include="MyTask_Consumer_Sized.h" />
     <ClInclude Include="MyTask_Printer.h" />
@@ -177,6 +181,7 @@
     <ClInclude Include="tester_fiber1.h" />
     <ClInclude Include="tester_fiber1_sized.h" />
     <ClInclude Include="tester_fiber_wait.h" />
+    <ClInclude Include="tester_subsys_0.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />

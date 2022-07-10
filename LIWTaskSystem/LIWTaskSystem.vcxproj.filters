@@ -37,6 +37,9 @@
     <Filter Include="Memory">
       <UniqueIdentifier>{f7a1d902-2b34-404f-a4c6-cd4609279c14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test\Testers">
+      <UniqueIdentifier>{5f525e61-2c6a-455a-8104-56eecf55b949}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LIWThreadPool.cpp">
@@ -101,35 +104,11 @@
     <ClInclude Include="LIWITask.h">
       <Filter>TaskSystem</Filter>
     </ClInclude>
-    <ClInclude Include="tester0.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="tester1.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="LIWThreadSafeQueueSized.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="tester_correctness_immed_api.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="tester_correctness_wait_api.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="tester_correctness_immed_api_sizefree.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="tester_correctness_wait_api_sizefree.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="tester0_sizefree.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="LIWThreadPoolSized.h">
       <Filter>TaskSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="tester1_sizefree.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MyTask_Worker.h">
       <Filter>Test\Sizefree</Filter>
@@ -179,17 +158,8 @@
     <ClInclude Include="LIWFiberWorker.h">
       <Filter>Fiber</Filter>
     </ClInclude>
-    <ClInclude Include="tester_fiber_wait.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="tester_fiber1.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="LIWFiberThreadPoolSized.h">
       <Filter>Fiber</Filter>
-    </ClInclude>
-    <ClInclude Include="tester_fiber1_sized.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="FiberExecutorSized.h">
       <Filter>Test\Fiber</Filter>
@@ -205,6 +175,48 @@
     </ClInclude>
     <ClInclude Include="LIWLGPoolAllocator.h">
       <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWLGGPAllocator.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_correctness_immed_api.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_correctness_immed_api_sizefree.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_correctness_wait_api.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_correctness_wait_api_sizefree.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_fiber_wait.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_fiber1.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_fiber1_sized.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester0.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester0_sizefree.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester1.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester1_sizefree.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="tester_subsys_0.h">
+      <Filter>Test\Testers</Filter>
+    </ClInclude>
+    <ClInclude Include="LIWTypes.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

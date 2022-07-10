@@ -43,12 +43,19 @@
 //	tester_fiber1();
 //}
 
-#include "tester_fiber1_sized.h"
-int main() {
-	tester_fiber1_sized();
-}
+//#include "tester_fiber1_sized.h"
+//int main() {
+//	tester_fiber1_sized();
+//}
 
 //#include "tester_fiber_wait.h"
 //int main() {
 //	tester_fiber_wait();
 //}
+
+
+
+#include "tester_subsys_0.h"
+int main() {
+	test();
+}
